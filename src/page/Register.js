@@ -1,3 +1,4 @@
+import styles from './register_style.css'
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -12,9 +13,11 @@ function Register(props) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
 
     const onSubmit = async (e) => {
-        //e.preventDefault()
+        e.preventDefault()
 
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -23,8 +26,8 @@ function Register(props) {
                 const uid = userCredential.user.uid
                 const data = {}
                 console.log("USER: " + userCredential.user.uid)
-                socket.emit('add_user',{id: uid, email: email})
-                //navigate("/login")
+                socket.emit('add_user', { uid: uid, email: email, firstName: firstName, lastName: lastName})
+                navigate("/login")
                 // ...
             })
             .catch((error) => {
@@ -44,19 +47,33 @@ function Register(props) {
     return (
         <div className='register--div'>
             <h1 className='register--text'>Register</h1>
-            <input
-                className='register--email--input'
-                placeholder='Enter email'
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-            />
-            <input
-                className='register--password--input'
-                placeholder='Enter password'
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-            />
-            <button onClick={testSubmit}>Test</button>
+            <div className='register--input--form'>
+                <input
+                    className='register--input'
+                    placeholder='Enter Email'
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                />
+                <input
+                    className='register--input'
+                    placeholder='Enter Password'
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                />
+                <input
+                    className='register--input'
+                    placeholder='First Name'
+                    onChange={(e) => setFirstName(e.target.value)}
+                    value={firstName}
+                />
+                <input
+                    className='register--input'
+                    placeholder='Last Name'
+                    onChange={(e) => setLastName(e.target.value)}
+                    value={lastName}
+                />
+                <button className='register--input' onClick={onSubmit}>Register</button>
+            </div>
         </div>
     )
 }

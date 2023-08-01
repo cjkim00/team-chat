@@ -8,7 +8,7 @@
     margin-top: 150px;
 }
 
-.login--input--div {
+.login--input--form {
     height:100%;
     display:flex;
     flex-direction: column;

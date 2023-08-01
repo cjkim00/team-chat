@@ -1,0 +1,17 @@
+.messagebox--div {
+    width: 100%;
+    height: 100%;
+    background-color:brown;
+    overflow: auto;
+}
+
+.messagebox--inputs--div {
+    display: flex;
+    
+    width: 100%;
+    border-style: solid;
+}
+
+.messagebox--messages--div {
+    border-style: solid;
+}

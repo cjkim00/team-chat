@@ -1,0 +1,11 @@
+.addServerPopup--div {
+    width: 500px;
+    height: 500px;
+    border-style: solid;
+    position: absolute;
+    background-color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,6 @@
+.mainpage--server--bar {
+    width: 100vh;
+    height: 100vh;
+    background-color: aquamarine;
+    display: flex;
+}

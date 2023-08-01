@@ -7,7 +7,7 @@ import io from 'socket.io-client'
 
 const socket = io.connect('http://localhost:4000')
 
-function Login(props) {
+function Login({navigation}) {
     const navigate = useNavigate();
     const [test, setTest] = useState("")
     const [email, setEmail] = useState("")
@@ -19,13 +19,16 @@ function Login(props) {
 
 
     const onLogin = (e) => {
-        //e.preventDefault();
+        e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
                 console.log("Success" + userCredential.user.email)
-                navigate("/home")
+                //change navigation to an actual route
+                //navigate("/home", {email: userCredential.user.email, uid: userCredential.user.uid})
+                //socket.emit('load_servers', { uid: userCredential.user.uid })
+                navigate('/Home', {state: {email: userCredential.user.email, uid: userCredential.user.uid}})
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -33,32 +36,11 @@ function Login(props) {
                 console.log(errorCode, errorMessage + " EMAIL: " + email + " PASSWORD" + password)
             });
     }
-
-    function testLogin() {
-        //onLogin()
-        console.log("EMAIL: " + email + " PASSWORD: " + password)
-    }
-
-    function testServerLogin() {
-        socket.emit('load_servers', 2)
-    }
-
-    function testAddUser() {
-        socket.emit('add_user', { id: 123, email: "email1@testemail.com" })
-    }
-
-    useEffect(() => {
-        socket.on('user_servers', (user_servers) => {
-            user_servers = JSON.parse(user_servers)
-            //console.log(...user_servers)
-            //setServerInfo((state) => [...user_servers, ...state])
-        })
-    })
-    //change div login--input--div to a form
+    
     return (
         <div className='login--div'>
             <h1 className='login--text'>Login</h1>
-            <form className='login--input--div'>
+            <form className='login--input--form'>
                 <input
                     type='email'
                     className='login--input'
